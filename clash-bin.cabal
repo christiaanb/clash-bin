@@ -1,14 +1,18 @@
 Name: clash-bin
 Version: 0.1
-Copyright: XXX
+Copyright: The GHC Team 2005-2007, Christiaan Baaij 2010
+License: BSD3
+license-file: LICENSE
 Author: Christiaan Baaij
 Maintainer: christiaan.baaij@gmail.com
 Homepage: http://clash.ewi.utwente.nl/
-Synopsis: Blaat
-Description: Blaat
-Category: Blaat
+package-url: http://github.com/christiaanb/clash/tree/master/clash-bin
+Synopsis: GHC(i) binary loaded with clash library
+Description: Basically provide an executable compiler and interactive 
+             interpreter for the CLaSH library.
+Category: Hardware, Language
 Build-Type: Simple
-Cabal-Version: >= 1.2
+Cabal-Version: >= 1.2.3
 
 Extra-Source-Files: 
     hschooks.c,
