@@ -1027,24 +1027,18 @@ loadModule' files = do
 
 makeVHDL :: [FilePath] -> InputT GHCi ()
 makeVHDL fs = do
-  targets <- GHC.getTargets
   dflags <- GHC.getSessionDynFlags
   let libdir = DynFlags.topDir dflags
   case fs of
     [] -> do
-      let targetIds = map targetId targets
-      let filetargets = filter isFileTarget targetIds
-      let filenames = map (\(GHC.TargetFile f _) -> f) filetargets
-      liftIO $ CLasH.Translator.makeVHDLAnnotations libdir filenames
+      modgraph <- GHC.getModuleGraph
+      let locations = catMaybes $ map GHC.ml_hs_file $ map GHC.ms_location modgraph      
+      liftIO $ CLasH.Translator.makeVHDLAnnotations libdir locations
       return ()
     files -> do
       exp_filenames <- mapM expandPath files
       liftIO $ CLasH.Translator.makeVHDLAnnotations libdir exp_filenames
       return ()
-
-isFileTarget :: GHC.TargetId -> Bool
-isFileTarget (GHC.TargetFile _ _) = True
-isFileTarget _                = False
 
 checkModule :: String -> InputT GHCi ()
 checkModule m = do
